@@ -81,6 +81,7 @@ namespace Steamworks
 
 			if ( readData > 0 )
 			{
+				OnRawChatMessage?.Invoke( new Lobby( callback.SteamIDLobby ), new Friend( steamid ), buffer, readData );
 				OnChatMessage?.Invoke( new Lobby( callback.SteamIDLobby ), new Friend( steamid ), Helpers.MemoryToString( buffer ) );
 			}
 		}
@@ -144,6 +145,8 @@ namespace Steamworks
 		/// Invoked when a chat message is received from a member of the lobby.
 		/// </summary>
 		public static event Action<Lobby, Friend, string> OnChatMessage;
+
+		public static event Action<Lobby, Friend, IntPtr, int> OnRawChatMessage;
 
 		public static LobbyQuery LobbyList => new LobbyQuery();
 
